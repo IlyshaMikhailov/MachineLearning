@@ -1,16 +1,11 @@
 import numpy as np
 import matplotlib.pyplot as plt
 from matplotlib.animation import FuncAnimation
+from sklearn.datasets import load_iris
 
-def generate_data(num_points, num_clusters):
-    data = []
-    for i in range(num_clusters):
-        center = np.random.rand(2) * 10
-        points = center + np.random.randn(num_points // num_clusters, 2)
-        data.append(points)
-    return np.concatenate(data)
+iris = load_iris()
+data = iris.data
 
-# Вычисление расстояний между точками и центроидами
 def distances_count(data, centroids):
     distances = np.sqrt(((data - centroids[:, np.newaxis])**2).sum(axis=2))
     return distances
@@ -38,7 +33,6 @@ def vizualization(data, centroids_history, clusters_history, num_clusters):
     ani = FuncAnimation(fig, update, frames=len(centroids_history), repeat=False)
     plt.show()
 
-# Основная функция K-means
 def kmeans(data, num_clusters, max_iterations=100):
     centroids = data[np.random.choice(len(data), num_clusters, replace=False)]
     centroids_history = [centroids.copy()]
@@ -55,5 +49,4 @@ def kmeans(data, num_clusters, max_iterations=100):
 
     vizualization(data, centroids_history, clusters_history, num_clusters)
 
-data = generate_data(300, 3)
-kmeans(data, 3)
+kmeans(data[:, :2], 3)
