@@ -55,6 +55,5 @@ def kmeans(data, num_clusters, max_iterations=100):
 
     vizualization(data, centroids_history, clusters_history, num_clusters)
 
-# Генерируем данные и запускаем K-means
-data = generate_data(300, 3)  # Генерируем 300 точек для 3 кластеров
-kmeans(data, 3)  # Запускаем K-means с 3 кластерами
+data = generate_data(300, 3)
+kmeans(data, 3)
