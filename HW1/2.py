@@ -38,7 +38,7 @@ def kmeans(data, num_clusters, max_iterations=100):
     centroids_history = [centroids.copy()]
     clusters_history = []
 
-    for _ in range(max_iterations):
+    for i in range(max_iterations):
         clusters = update_clusters(data, centroids)
         centroids = update_centroids(data, clusters, num_clusters)
         centroids_history.append(centroids.copy())

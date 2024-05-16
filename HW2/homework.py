@@ -1,14 +1,14 @@
 import numpy as np
 
 
-def euclidean_distance(point1, point2):
+def distance(point1, point2):
     return np.sqrt(np.sum((point1 - point2) ** 2))
 
 
 def region_query(points, point_index, eps):
     neighbors = []
     for i, point in enumerate(points):
-        if i != point_index and euclidean_distance(points[point_index], point) < eps:
+        if i != point_index and distance(points[point_index], point) < eps:
             neighbors.append(i)
     return neighbors
 
@@ -45,13 +45,13 @@ def dbscan(points, eps, min_samples):
     return labels.astype(int)
 
 
-# Пример использования:
+
 if __name__ == '__main__':
     import pygame
 
     points = []
     r = 10
-    minPts, eps = 4, 3 * r
+    minPts, eps = 4, 9 * r
     colors = ['blue', 'green', 'purple', 'red']
     pygame.init()
     screen = pygame.display.set_mode((800, 600))
