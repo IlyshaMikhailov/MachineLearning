@@ -8,7 +8,7 @@ from sklearn.linear_model import Lasso
 
 
 def load_data(file_path):
-    df = pd.read_csv("bikes_rent.csv")
+    df = pd.read_csv(file_path)
     return df
 
 
@@ -28,8 +28,11 @@ def simple_linear_regression(df, predictor, target):
 
     return model
 
-def predict_cnt(model, predictor_value):
-    return model.predict([[predictor_value]])
+
+def predict_cnt(model, predictor, predictor_value):
+    df_value = pd.DataFrame({predictor: [predictor_value]})
+    return model.predict(df_value)
+
 
 def reduce_dimensionality_and_plot(df, predictors, target):
     X = df[predictors]
@@ -47,6 +50,7 @@ def reduce_dimensionality_and_plot(df, predictors, target):
     plt.title('Предсказание')
     plt.colorbar(label=target)
     plt.show()
+
 
 def lasso_regression(df, predictors, target):
     X = df[predictors]
@@ -68,17 +72,15 @@ predictor = 'weathersit'
 target = 'cnt'
 model = simple_linear_regression(df, predictor, target)
 
-
 predictor_value = 2
-predicted_cnt = predict_cnt(model, predictor_value)
-print("Предпологаемое значение :", predicted_cnt[0])
+predicted_cnt = predict_cnt(model, predictor, predictor_value)
+print("Предполагаемое значение:", predicted_cnt[0])
 
 predictors = ['temp', 'hum', 'windspeed(ms)']
 reduce_dimensionality_and_plot(df, predictors, target)
 
-
 predictors = ['season', 'yr', 'mnth', 'holiday', 'weekday', 'workingday', 'weathersit', 'temp', 'hum', 'windspeed(ms)']
 feature_importance, most_influential_feature = lasso_regression(df, predictors, target)
-print("Важность функции:")
+print("Важность функций:")
 print(feature_importance)
 print("Самая влиятельная особенность:", most_influential_feature)
